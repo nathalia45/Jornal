@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,8 +27,14 @@
 		<tbody>
 			<c:forEach items="${products}" var="product">
 				<tr>
-					<td>${product.name}</td>
+					<td> <a href="${s:mvcUrl('PC#see').arg(0, product.id).build()}">${product.name}</a> </td>
 					<td>${product.description}</td>
+					<td><fmt:formatDate pattern="dd/MM/yyyy" value="${product.date.time}"></fmt:formatDate></td>
+					<td>
+						<c:forEach items="${product.prices}" var="price">
+							<span>${price.type}: <strong>${price.value}</strong></span> <br/>
+						</c:forEach>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>

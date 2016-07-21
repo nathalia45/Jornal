@@ -3,12 +3,15 @@ package br.ufc.web.jornal.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +25,7 @@ import br.ufc.web.jornal.validation.ProductValidation;
 
 @Controller
 @RequestMapping("/product")
+@Scope(value=WebApplicationContext.SCOPE_REQUEST)
 public class ProductController {
 	
 	@Autowired
@@ -29,6 +33,9 @@ public class ProductController {
 	
 	@Autowired
 	private FileSaver fileSaver;
+	
+	@Autowired
+	MessageSet messageSet;
 	
 	@InitBinder
 	public void InitBinder(WebDataBinder binder){
@@ -49,12 +56,12 @@ public class ProductController {
 			return addForm(product);
 		}
 		
-		String path = fileSaver.write("uploads", image);
+		String path = fileSaver.write("USERS-UPLOADS", image);
 		product.setImagePath(path);
 		productDao.add(product);
 				
 		redirectAttributes.addFlashAttribute("messages", 
-				new MessageSet().addMessageSuccess("Produto adicionado!").getMessages()
+				messageSet.addMessageSuccess("Produto adicionado!").getMessages()
 		);
 		
 		return new ModelAndView("redirect:/product/list");
@@ -62,6 +69,13 @@ public class ProductController {
 	
 	@RequestMapping(value="list", method=RequestMethod.GET)
 	public ModelAndView list() {
+		ModelAndView modelAndView = new ModelAndView("product/list");
+		modelAndView.addObject("products", productDao.list());
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="see/{id}", method=RequestMethod.GET)
+	public ModelAndView see(@PathVariable int id) {
 		ModelAndView modelAndView = new ModelAndView("product/list");
 		modelAndView.addObject("products", productDao.list());
 		return modelAndView;

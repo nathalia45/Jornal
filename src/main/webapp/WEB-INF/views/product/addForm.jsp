@@ -43,7 +43,6 @@
 		
 		<div>
 			<label>Image</label>
-			<form:errors path="image" />
 			<input name="image" type="file"/>
 		</div>
 		

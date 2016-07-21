@@ -15,9 +15,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.ufc.web.jornal.controller.HomeController;
 import br.ufc.web.jornal.dao.ProductDAO;
+import br.ufc.web.jornal.infra.FileSaver;
+import br.ufc.web.jornal.model.MessageSet;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses={HomeController.class, ProductDAO.class})
+@ComponentScan(basePackageClasses={HomeController.class, ProductDAO.class, FileSaver.class, MessageSet.class})
 public class AppWebConfiguration {
 
 	@Bean
@@ -25,6 +27,10 @@ public class AppWebConfiguration {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
+		
+		// Para deixar os atributos do controller disponíveis no jsp
+		resolver.setExposeContextBeansAsAttributes(true);
+		// resolver.setExposedContextBeanNames("varName");
 		return resolver;
 	}
 	

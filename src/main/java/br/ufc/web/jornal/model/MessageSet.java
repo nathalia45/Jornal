@@ -3,8 +3,14 @@ package br.ufc.web.jornal.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
 import br.ufc.web.jornal.model.Message.Type;
 
+@Component
+@Scope(value=WebApplicationContext.SCOPE_SESSION)
 public class MessageSet {
 
 	private List<Message> messages;
