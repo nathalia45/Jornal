@@ -13,20 +13,20 @@ public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	private String text;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.REFRESH)
 	private User author;
-	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.REFRESH)
 	private News news;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

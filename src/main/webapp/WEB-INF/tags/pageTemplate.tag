@@ -71,8 +71,11 @@
 							</a>
 					    </c:when>    
 					    <c:otherwise>
-					        <a href="<c:url value='/login'/>" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+					        <a href="<c:url value='/loginForm'/>" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
 								login
+							</a>
+							<a href="<c:url value='/addUserForm'/>" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+								Cadastro
 							</a>
 					    </c:otherwise>
 					</c:choose>

@@ -16,7 +16,7 @@ public class Classified {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	private String title;
 	private String text;
@@ -27,14 +27,14 @@ public class Classified {
 	
 	private String phoneNumber;
 	
-	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.REFRESH)
 	private User author;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -92,6 +92,10 @@ public class Classified {
 
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	
+	public String getRawText() {
+		return text.length() > 50? text.substring(0, 50): text;
 	}
 	
 }

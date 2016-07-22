@@ -27,6 +27,8 @@ public class NewsDAO {
 	}
 	
 	public void delete(News news) {
+		news.setAuthor(null);
+		news.setSection(null);
 		manager.remove( (manager.contains(news)? news: manager.merge(news)) );
 	}
 

@@ -31,9 +31,9 @@
 	
 		<div class="mdl-grid mdl-color--grey-200">
 			<div class="div-form mdl-grid--no-spacing mdl-cell mdl-cell--8-col mdl-cell--2-offset mdl-card mdl-shadow--2dp">
-				<h3 class="mdl-cell--12-col mdl-layout-title">Adicionar Jornalista</h3>
+				<h3 class="mdl-cell--12-col mdl-layout-title">Adicionar Usuário</h3>
 				
-				<form:form action="${s:mvcUrl('EC#addJournalist').build()}" method="post" commandName="user" enctype="multipart/form-data">
+				<form:form action="${s:mvcUrl('HC#addUser').build()}" method="post" commandName="user" enctype="multipart/form-data">
 										
 					<form:errors path="name"/>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">

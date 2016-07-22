@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
@@ -30,6 +31,14 @@
 			text-decoration: none;
 		}
 		
+		form {
+			padding: 48px;
+		}
+		
+		ul {
+			padding: 32px !important;
+		}
+		
 	</style>
 
 </jsp:attribute>
@@ -49,23 +58,31 @@
 					<h6 class="mdl-cell mdl-cell--12-col float-right">${news.author.name}</h6>
 					<p class="mdl-cell mdl-cell--12-col">${news.text}</p>
 					
-					<c:forEach items="${sections}" var="sec">
+				</div>
+				
+				<div class="coments mdl-cell mdl-cell--12-col mdl-shadow--2dp mdl-color--white">
+					<form:form action="${s:mvcUrl('NC#addComment').arg(0, news.id).build()}" method="post" commandName="comment">
+					  <div class="mdl-textfield mdl-js-textfield">
+					    <form:textarea cssClass="mdl-textfield__input" path="text" rows= "3" ></form:textarea>
+					    <label class="mdl-textfield__label" for="text">Escreva um comentário...</label>
+					  </div>
+					  <br/>
+					  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--primary" type="submit">Adicionar Comentário</button>
+					</form:form>
 					
-						<div class="mdl-cell mdl-cell--6-col mdl-card mdl-color--white mdl-shadow--2dp">
-						  	<div class="mdl-card__title mdl-card--expand">
-						    	<h2 class="mdl-card__title-text">${sec.name}</h2>
-						  	</div>
-						  	<div class="mdl-card__supporting-text">
-							    ${sec.description}
-						  	</div>
-						  	<div class="mdl-card__actions mdl-card--border">
-						    	<a href="${s:mvcUrl('NC#listBySection').arg(0, sec.id).build()}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-						      		Ver Notícias
-						    	</a>
-						  	</div>
-						</div>
-						
-					</c:forEach>
+					<ul class="mdl-list ">
+						<c:forEach items="${comments}" var="c">
+						  	<li class="mdl-list__item mdl-list__item--three-line">
+						    	<span class="mdl-list__item-primary-content">
+						      		<i class="material-icons mdl-list__item-avatar">person</i>
+						      	<span>${c.author.name}</span>
+						      	<span class="mdl-list__item-text-body">
+							        ${c.text}
+						      	</span>
+						    	</span>
+						  	</li>
+					  	</c:forEach>
+					</ul>
 				</div>
 				
 			</div>

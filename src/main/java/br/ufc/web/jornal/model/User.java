@@ -23,7 +23,7 @@ public class User implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	private String name;
 	
@@ -31,14 +31,14 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 	
-	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.REFRESH)
 	private List<Role> roles = new ArrayList<>();
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

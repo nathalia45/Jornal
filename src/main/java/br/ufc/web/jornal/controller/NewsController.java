@@ -16,10 +16,12 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.web.jornal.dao.CommentDAO;
 import br.ufc.web.jornal.dao.NewsDAO;
 import br.ufc.web.jornal.dao.SectionDAO;
 import br.ufc.web.jornal.infra.NewsEditor;
 import br.ufc.web.jornal.infra.SectionEditor;
+import br.ufc.web.jornal.model.Comment;
 import br.ufc.web.jornal.model.MessageSet;
 import br.ufc.web.jornal.model.News;
 import br.ufc.web.jornal.model.Section;
@@ -35,6 +37,9 @@ public class NewsController {
 	
 	@Autowired
 	private SectionDAO sectionDao;
+	
+	@Autowired
+	private CommentDAO commentDao;
 	
 	@Autowired
 	MessageSet messageSet;
@@ -108,9 +113,11 @@ public class NewsController {
 	}
 	
 	@RequestMapping(value="see/{id}", method=RequestMethod.GET)
-	public ModelAndView see(@PathVariable int id) {
+	public ModelAndView see(@PathVariable int id, Comment comment) {
 		ModelAndView modelAndView = new ModelAndView("news/see");
-		modelAndView.addObject("news", newsDao.getById(id));
+		News news = newsDao.getById(id);
+		modelAndView.addObject("news", news);
+		modelAndView.addObject("comments", commentDao.getByNews(news));
 		return modelAndView;
 	}
 	
@@ -133,6 +140,19 @@ public class NewsController {
 		Section section = sectionDao.getById(id);
 		modelAndView.addObject("section", section);
 		modelAndView.addObject("news", newsDao.getBySection(section));
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="addComment/{id}", method=RequestMethod.POST)
+	public ModelAndView addComment(@PathVariable int id, @Valid Comment comment) {
+		News news = newsDao.getById(id);
+		ModelAndView modelAndView = new ModelAndView("redirect:/news/see/" + news.getId());
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		comment.setNews(news);
+		comment.setAuthor(user);
+		System.out.println(comment.getId() + " : " + comment.getAuthor() + " : " + comment.getNews());
+		comment.setId(null);
+		commentDao.add(comment);
 		return modelAndView;
 	}
 	

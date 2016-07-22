@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -45,6 +44,16 @@ public class EditorDAO {
 		manager.persist(user);
 		List<Role> roles = new ArrayList<>();
 		roles.add(new Role("ROLE_JOURNALIST"));
+		manager.persist(roles.get(0));
+		user.setRoles(roles);
+		manager.persist(user);
+	}
+
+	public void addUser(User user) {
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		manager.persist(user);
+		List<Role> roles = new ArrayList<>();
+		roles.add(new Role("ROLE_READER"));
 		manager.persist(roles.get(0));
 		user.setRoles(roles);
 		manager.persist(user);

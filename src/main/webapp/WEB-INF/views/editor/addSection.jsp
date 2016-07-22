@@ -31,27 +31,21 @@
 	
 		<div class="mdl-grid mdl-color--grey-200">
 			<div class="div-form mdl-grid--no-spacing mdl-cell mdl-cell--8-col mdl-cell--2-offset mdl-card mdl-shadow--2dp">
-				<h3 class="mdl-cell--12-col mdl-layout-title">Adicionar Jornalista</h3>
+				<h3 class="mdl-cell--12-col mdl-layout-title">Adicionar Seção</h3>
 				
-				<form:form action="${s:mvcUrl('EC#addJournalist').build()}" method="post" commandName="user" enctype="multipart/form-data">
+				<form:form action="${s:mvcUrl('EC#addSection').build()}" method="post" commandName="section" enctype="multipart/form-data">
 										
 					<form:errors path="name"/>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
 					    <form:input cssClass="mdl-textfield__input" path="name"/>
-					    <label class="mdl-textfield__label" for="name">Nome</label>
+					    <label class="mdl-textfield__label" for="name">Título</label>
 					</div>					
 					
-					<form:errors path="email"/>
+					<form:errors path="description"/>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
-					    <form:input cssClass="mdl-textfield__input" path="email"/>
-					    <label class="mdl-textfield__label" for="email">Email</label>
+					    <form:textarea cssClass="mdl-textfield__input" path="description"></form:textarea>
+					    <label class="mdl-textfield__label" for="email">Texto</label>
 					</div>					
-
-					<form:errors path="password"/>
-					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell--12-col">
-					    <form:input cssClass="mdl-textfield__input" path="password"/>
-					    <label class="mdl-textfield__label" for="password">Senha</label>
-					</div>	
 										
 					<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-button--primary" type="submit">Salvar</button>
 					

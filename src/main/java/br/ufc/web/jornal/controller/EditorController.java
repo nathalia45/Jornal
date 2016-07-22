@@ -1,5 +1,7 @@
 package br.ufc.web.jornal.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import br.ufc.web.jornal.dao.EditorDAO;
 import br.ufc.web.jornal.dao.NewsDAO;
 import br.ufc.web.jornal.dao.SectionDAO;
 import br.ufc.web.jornal.model.Classified;
+import br.ufc.web.jornal.model.News;
 import br.ufc.web.jornal.model.Section;
 import br.ufc.web.jornal.model.User;
 
@@ -94,7 +97,9 @@ public class EditorController {
 	
 	@RequestMapping(value="deleteClassified/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteClassified(@PathVariable int id) {
-		classifiedDao.delete(classifiedDao.getById(id));
+		Classified classified = classifiedDao.getById(id);
+		classified.setAuthor(null);
+		classifiedDao.delete(classified);
 		return new ModelAndView("redirect:/editor");
 	}
 	
@@ -117,7 +122,11 @@ public class EditorController {
 	
 	@RequestMapping(value="deleteSection/{id}", method=RequestMethod.GET)
 	public ModelAndView deleteSection(@PathVariable int id) {
-		sectionDao.delete(sectionDao.getById(id));
+		Section section = sectionDao.getById(id);
+		List<News> news = newsDao.getAll();
+		for(News n: news)
+			newsDao.delete(n);
+		sectionDao.delete(section);
 		return new ModelAndView("redirect:/editor");
 	}
 	

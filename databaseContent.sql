@@ -1,3 +1,7 @@
+drop database jornal;
+create database jornal;
+use jornal;
+
 delete from News;
 delete from Classified;
 delete from User_Role;
