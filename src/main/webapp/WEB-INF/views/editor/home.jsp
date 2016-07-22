@@ -70,7 +70,7 @@
 				  	</tbody>
 				</table>
 				
-				<a href="${s:mvcUrl('NC#addForm').build()}"
+				<a href="${s:mvcUrl('EC#addJournalistForm').build()}"
 					class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--accent">
 					<i class="material-icons">add</i>
 				</a>
@@ -115,7 +115,7 @@
 				  	</tbody>
 				</table>
 				
-				<a href="${s:mvcUrl('NC#addForm').build()}"
+				<a href="${s:mvcUrl('EC#addClassifiedForm').build()}"
 					class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--accent">
 					<i class="material-icons">add</i>
 				</a>

@@ -4,20 +4,20 @@ delete from User_Role;
 delete from Role;
 delete from User;
 delete from Section;
-insert into Role values("ROLE_ADMIN");
-insert into Role values("ROLE_JOURNALIST");
-insert into Role values("ROLE_EDITOR");
-insert into Role values("ROLE_READER");
+insert into Role values(1, "ROLE_ADMIN");
+insert into Role values(2, "ROLE_JOURNALIST");
+insert into Role values(3, "ROLE_EDITOR");
+insert into Role values(4, "ROLE_READER");
 
 insert into User values(1, "nath@gmail.com", "Nathalia Ferreira", "$2a$06$2IzGpTB2rrzjcI3OwH0DoOULQnuSJHA1HBjcvtaTDU1DXwUPbvdYm");
 insert into User values(2, "journalist@gmail.com", "Nathalia Ferreira", "$2a$06$2IzGpTB2rrzjcI3OwH0DoOULQnuSJHA1HBjcvtaTDU1DXwUPbvdYm");
 insert into User values(3, "editor@gmail.com", "Nathalia Ferreira", "$2a$06$2IzGpTB2rrzjcI3OwH0DoOULQnuSJHA1HBjcvtaTDU1DXwUPbvdYm");
 insert into User values(4, "reader@gmail.com", "Nathalia Ferreira", "$2a$06$2IzGpTB2rrzjcI3OwH0DoOULQnuSJHA1HBjcvtaTDU1DXwUPbvdYm");
 
-insert into User_Role values(1, "ROLE_ADMIN");
-insert into User_Role values(2, "ROLE_JOURNALIST");
-insert into User_Role values(3, "ROLE_EDITOR");
-insert into User_Role values(4, "ROLE_READER");
+insert into User_Role values(1, 1);
+insert into User_Role values(2, 2);
+insert into User_Role values(3, 3);
+insert into User_Role values(4, 4);
 
 insert into Section values(1, "Veja as notícias mais quentes sobre Esporte", "Esporte");
 insert into Section values(2, "Veja as notícias mais quentes sobre Famosos", "Famosos");

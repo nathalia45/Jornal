@@ -1,11 +1,9 @@
 package br.ufc.web.jornal.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.web.jornal.dao.ClassifiedDAO;
+import br.ufc.web.jornal.dao.EditorDAO;
 import br.ufc.web.jornal.dao.NewsDAO;
 import br.ufc.web.jornal.dao.SectionDAO;
-import br.ufc.web.jornal.dao.UserDAO;
 import br.ufc.web.jornal.model.Classified;
-import br.ufc.web.jornal.model.Role;
 import br.ufc.web.jornal.model.Section;
 import br.ufc.web.jornal.model.User;
 
@@ -28,7 +25,7 @@ import br.ufc.web.jornal.model.User;
 public class EditorController {
 	
 	@Autowired
-	private UserDAO userDao;
+	private EditorDAO editorDao;
 	@Autowired
 	private ClassifiedDAO classifiedDao;
 	@Autowired
@@ -39,7 +36,7 @@ public class EditorController {
 	@RequestMapping("")
 	public ModelAndView home() {
 		ModelAndView model = new ModelAndView("editor/home");
-		model.addObject("journalists", userDao.getByRole("ROLE_JOURNALIST"));
+		model.addObject("journalists", editorDao.getByRole("ROLE_JOURNALIST"));
 		model.addObject("classifieds", classifiedDao.getAll());
 		model.addObject("sections", sectionDao.getAll());
 		model.addObject("news", newsDao.getAll());
@@ -58,12 +55,7 @@ public class EditorController {
 			return addJournalistForm(user);
 		}
 		
-		List<Role> roles = new ArrayList<>();
-		Role r = new Role();
-		r.setName("ROLE_JOURNALIST");
-		roles.add(r);
-		user.setRoles(roles);
-		userDao.add(user);
+		editorDao.addJournalist(user);
 		
 		return new ModelAndView("redirect:/editor");
 	}
@@ -71,7 +63,7 @@ public class EditorController {
 	@RequestMapping("deleteJournalist/{id}")
 	public ModelAndView deleteJournalist(@PathVariable int id) {
 		ModelAndView model = new ModelAndView("redirect:/editor");
-		userDao.delete(userDao.getById(id));
+		editorDao.delete(editorDao.getById(id));
 		return model;
 	}
 
@@ -87,12 +79,14 @@ public class EditorController {
 	}
 	
 	@RequestMapping(value="addClassified", method=RequestMethod.POST)
-	public ModelAndView addClasified(@Valid Classified classified, BindingResult result, RedirectAttributes redirectAttributes) {
+	public ModelAndView addClassified(@Valid Classified classified, BindingResult result, RedirectAttributes redirectAttributes) {
 				
 		if(result.hasErrors()) {
 			return addClassifiedForm(classified);
 		}
 		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		classified.setAuthor(user);
 		classifiedDao.add(classified);
 		
 		return new ModelAndView("redirect:/editor");
