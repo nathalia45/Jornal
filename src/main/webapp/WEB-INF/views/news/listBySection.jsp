@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
@@ -19,8 +19,9 @@
 	<jsp:body>
 	
 		<div class="mdl-grid mdl-color--grey-200">
-			<div class="mdl-grid mdl-cell mdl-cell--8-col">
-				<h3 class="mdl-cell mdl-cell--12-col">Últimas notícias</h3>
+			<div class="mdl-grid mdl-cell mdl-cell--8-col mdl-cell--2-offset">
+				<h3 class="mdl-cell mdl-cell--12-col">${section.name}</h3>
+				<h4 class="mdl-cell mdl-cell--12-col">${section.description}</h4>
 				
 				<c:forEach items="${news}" var="n">
 				

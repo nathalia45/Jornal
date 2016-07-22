@@ -31,5 +31,24 @@ public class UserDAO implements UserDetailsService {
 		return users.get(0);
 		
 	}
+
+	public List<User> getByRole(String role) {
+		return manager.createQuery("select distinct(u) from User u join fetch u.roles r where r.name = :role", User.class)
+				.setParameter("role", role).getResultList();
+	}
+	
+	public User getById(int id) {
+		return manager.createQuery("select u from User n where u.id=:id", User.class)
+				.setParameter("id", id)
+				.getSingleResult();
+	}
+	
+	public void delete(User user) {
+		manager.remove(user);
+	}
+
+	public void add(User user) {
+		manager.persist(user);		
+	}
 	
 }
